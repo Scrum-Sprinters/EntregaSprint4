@@ -3,11 +3,13 @@ package com.ScrumSprinters.proyectoC3.Controladores;
 import com.ScrumSprinters.proyectoC3.Entidades.Empleado;
 import com.ScrumSprinters.proyectoC3.Servicios.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RestController
+@Controller
 public class EmployeeController {
 
     @Autowired
@@ -17,10 +19,21 @@ public class EmployeeController {
     }
 
     @GetMapping("/users")
-    public List<Empleado> getAllEmployees(){
-        return service.getAllEmployees();
+    public String getAllEmployees(Model model){
+        model.addAttribute("empleados" ,  service.getAllEmployees());
+        return "users";
     }
 
+    @PostMapping("/users")
+    public String saveEmployee(Model model){
+        model.addAttribute("empleados" ,  service.getAllEmployees());
+        model.addAttribute("nuevoEmpleado" , new Empleado());
+        return "users";
+    }
+
+
+
+/*
     @PostMapping("/users")
     public String saveEmployee(@RequestBody Empleado empleado){
             service.saveEmployee(empleado);
@@ -45,5 +58,5 @@ public class EmployeeController {
         return "Se llama borrar empleado con id: " + id;
     }
 
-
+*/
 }
