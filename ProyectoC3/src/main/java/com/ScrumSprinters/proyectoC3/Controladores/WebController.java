@@ -8,7 +8,7 @@ public class WebController {
 
 
     @GetMapping("/empleados")
-    public String mostrarEmpleados(){
+    public String mostrarEmpleados() {
         return "index2";
     }
 }

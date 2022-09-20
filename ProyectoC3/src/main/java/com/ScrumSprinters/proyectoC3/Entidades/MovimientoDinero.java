@@ -1,4 +1,5 @@
 package com.ScrumSprinters.proyectoC3.Entidades;
+
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -22,17 +23,17 @@ public class MovimientoDinero {
     @JoinColumn(name = "enterprise_id")
     private Empresa empresa;
     @CreationTimestamp
-    @Column (name = "created_at")
+    @Column(name = "created_at")
     private Date creado;
     @UpdateTimestamp
-    @Column (name = "updated_at")
+    @Column(name = "updated_at")
     private Date modificado;
 
     public MovimientoDinero() {
 
     }
 
-     public Long getId() {
+    public Long getId() {
         return id;
     }
 

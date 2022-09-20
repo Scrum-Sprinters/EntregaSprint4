@@ -1,12 +1,14 @@
 package com.ScrumSprinters.proyectoC3.Controladores;
 
 import com.ScrumSprinters.proyectoC3.Entidades.Empleado;
+import com.ScrumSprinters.proyectoC3.Entidades.EnumRole;
 import com.ScrumSprinters.proyectoC3.Servicios.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -15,20 +17,37 @@ public class EmployeeController {
     @Autowired
     EmployeeService service;
 
-    public EmployeeController(){
+
+
+    public EmployeeController() {
     }
 
     @GetMapping("/users")
-    public String getAllEmployees(Model model){
-        model.addAttribute("empleados" ,  service.getAllEmployees());
+    public String getAllEmployees(Model model) {
+        List<String> roles = new ArrayList<String>();
+        EnumRole[] listaRoles = EnumRole.values();
+        for (EnumRole rol:listaRoles) {
+            roles.add(rol.toString());
+        }
+
+        model.addAttribute("empleados", service.getAllEmployees());
+        model.addAttribute("nuevoEmpleado", new Empleado());
+        model.addAttribute("listaRoles" , roles);
         return "users";
     }
 
     @PostMapping("/users")
-    public String saveEmployee(Model model){
-        model.addAttribute("empleados" ,  service.getAllEmployees());
-        model.addAttribute("nuevoEmpleado" , new Empleado());
-        return "users";
+    public String saveEmployee(@ModelAttribute("nuevoEmpleado") Empleado empleado) {
+//        model.addAttribute("empleados" ,  service.getAllEmployees());
+        service.saveEmployee(empleado);
+        System.out.println(empleado);
+        return "redirect:/users";
+    }
+
+    @GetMapping("/users/{id}/delete")
+    public String deleteEmployee(@PathVariable Long id){
+        service.deleteEmployeeById(id);
+        return "redirect:/users";
     }
 
 

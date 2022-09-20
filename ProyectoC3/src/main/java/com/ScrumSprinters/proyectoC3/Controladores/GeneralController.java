@@ -8,11 +8,12 @@ import org.springframework.web.bind.annotation.RestController;
 public class GeneralController {
 
     @GetMapping("/")
-    public String getHomePage(){
+    public String getHomePage() {
         return "Home Page";
     }
+
     @GetMapping("/error")
-    public String getErrorPage(){
+    public String getErrorPage() {
         return "Error Page desde ruta";
     }
 }

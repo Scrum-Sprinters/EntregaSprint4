@@ -17,12 +17,12 @@ public class TransactionService {
     @Autowired
     EnterpriseRepository enterpriseRepository;
 
-    public List<MovimientoDinero> getAllTransaction(Long id_empresa){
+    public List<MovimientoDinero> getAllTransaction(Long id_empresa) {
         Empresa empresa = enterpriseRepository.findById(id_empresa).get();
         return empresa.getMovimientoDineros();
     }
 
-    public void saveTransaction(Long id_empresa , MovimientoDinero movimientoDinero){
+    public void saveTransaction(Long id_empresa, MovimientoDinero movimientoDinero) {
         //TODO: generar fechas de creado y modificado antes de insertar el nuevo registro a DB
         //TODO: agregar Empleado que esté logueado y --empresa del id--
 
@@ -35,14 +35,14 @@ public class TransactionService {
 
     //TODO: sin Terminar por falta de claridad en el endpoint /enterprise/{id]/movements/ ?????
     //TODO: no está claro si el id va a llegar en el body o en el path
-    public void updateTransactionById(MovimientoDinero movimientoDinero){
+    public void updateTransactionById(MovimientoDinero movimientoDinero) {
         //TODO: cambiar fecha de modificación de la entidad en la DB
         repository.save(movimientoDinero);
     }
 
     //TODO: sin Terminar por falta de claridad en el endpoint /enterprise/{id]/movements/ ?????
     //TODO: no está claro si el id va a llegar en el body o en el path
-    public void deleteTransactionById(Long id){
+    public void deleteTransactionById(Long id) {
         repository.deleteById(id);
     }
 

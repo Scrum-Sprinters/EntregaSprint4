@@ -10,18 +10,18 @@ import java.util.Date;
 import java.util.List;
 
 @Entity
-@Table(name="Enterprise")
+@Table(name = "Enterprise")
 public class Empresa {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    @Column(name="name" , unique = true)
+    @Column(name = "name", unique = true)
     private String nombre;
-    @Column(name="document", unique = true)
+    @Column(name = "document", unique = true)
     private long nit;
-    @Column(name="phone")
+    @Column(name = "phone")
     private String telefono;
-    @Column(name="address")
+    @Column(name = "address")
     private String direccion;
     @JsonIgnore
     @OneToMany(mappedBy = "empresa")
@@ -30,10 +30,10 @@ public class Empresa {
     @OneToMany(mappedBy = "empresa")
     private List<MovimientoDinero> movimientoDineros;
     @CreationTimestamp
-    @Column (name = "created_at")
+    @Column(name = "created_at")
     private Date creado;
     @UpdateTimestamp
-    @Column (name = "updated_at")
+    @Column(name = "updated_at")
     private Date modificado;
 
     //Constructor
