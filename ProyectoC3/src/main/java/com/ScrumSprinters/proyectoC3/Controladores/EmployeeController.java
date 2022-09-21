@@ -3,6 +3,7 @@ package com.ScrumSprinters.proyectoC3.Controladores;
 import com.ScrumSprinters.proyectoC3.Entidades.Empleado;
 import com.ScrumSprinters.proyectoC3.Entidades.EnumRole;
 import com.ScrumSprinters.proyectoC3.Servicios.EmployeeService;
+import com.ScrumSprinters.proyectoC3.Servicios.EnterpriseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,6 +17,8 @@ public class EmployeeController {
 
     @Autowired
     EmployeeService service;
+    @Autowired
+    EnterpriseService enterpriseService;
 
 
 
@@ -31,15 +34,24 @@ public class EmployeeController {
         }
 
         model.addAttribute("empleados", service.getAllEmployees());
+        model.addAttribute("empresas", enterpriseService.getAllEnterprise());
         model.addAttribute("nuevoEmpleado", new Empleado());
         model.addAttribute("listaRoles" , roles);
+
+        for(Empleado e : service.getAllEmployees()) {
+            System.out.println(e.getNombre());
+            System.out.println(e.getEmpresa());
+        }
         return "users";
     }
 
     @PostMapping("/users")
     public String saveEmployee(@ModelAttribute("nuevoEmpleado") Empleado empleado) {
 //        model.addAttribute("empleados" ,  service.getAllEmployees());
+        System.out.println("antes de guardar a base de datos");
+        System.out.println(empleado);
         service.saveEmployee(empleado);
+        System.out.println("despues de guardar a base de datos");
         System.out.println(empleado);
         return "redirect:/users";
     }

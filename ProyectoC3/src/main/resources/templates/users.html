@@ -18,9 +18,6 @@
 <nav class="bg-white px-2 sm:px-4 py-2.5 dark:bg-gray-900 fixed w-full z-20 top-0 left-0 border-b border-gray-200 dark:border-gray-600">
 -->
 
-<div th:each = "rol : ${listaRoles}">
-    <p th:text = "${rol}">aqui van los roles</p>
-</div>
 <nav class="bg-white border-gray-200 px-2 sm:px-4 py-2.5 rounded dark:bg-gray-900">
     <div class="container flex flex-wrap justify-between items-center mx-auto">
         <a href="https://flowbite.com/" class="flex items-center">
@@ -110,12 +107,6 @@
             Sistema de gestión de ingresos y gastos </h1>
     </div>
 
-    <!-- TITULO SECCION-->
-    <!--
-        <h2 class="text-gray-500 dark:text-gray-400">Empleados.</h2>
-        <hr class="my-8 h-px bg-gray-200 border-0 dark:bg-gray-700">
-    -->
-
     <!-- BOTON DE NUEVO--   solo disponible si es administrador -->
     <button data-modal-toggle="new-user-modal"
             class="inline-flex justify-center items-center py-3 px-5 text-base font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 dark:focus:ring-blue-900">
@@ -126,9 +117,6 @@
                   clip-rule="evenodd"></path>
         </svg>
     </button>
-
-
-    <!--MODAL REMOVER ELEMENTO-->
 
 
     <!-- TABLA PRINCIPAL-->
@@ -165,9 +153,20 @@
                 <td th:text="${empleado.correo}" class="py-4 px-6">
                     edwards2kx@gmail.com
                 </td>
-                <td th:text="${empleado.nombre}" class="py-4 px-6">
-                    Scrum Sprinters
-                </td>
+                <!-- <td th:text="${empleado.empresa.nombre} != null ? (${empleado.empresa.nombre}) : 'No asignada'" class="py-4 px-6"> -->
+
+                <div th:if = "${empleado.empresa!=null and !empleado.emplesa.empty}">
+                    <td th:text="${empleado.empresa.nombre}" class="py-4 px-6">
+                        Scrum Sprinters
+                    </td>
+                </div>
+
+                <div th:unless = "${empleado.empresa!=null and !empleado.emplesa.empty}">
+                    <td class="py-4 px-6">
+                        No asignado
+                    </td>
+                </div>
+
                 <td th:text="${empleado.rol}" class="py-4 px-6">
                     Scrum Master
                 </td>
@@ -175,15 +174,15 @@
                     <div>
                         <a href="#" type="button" data-modal-toggle="delete-user-modal"
                            class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Editar</a>
-                        <div class="px-4"> </div>
+                        <div class="px-4"></div>
                         <a href="#" type="button" data-modal-toggle="delete-user-modal"
-                           class="font-medium text-red-600 dark:text-red-500 hover:underline">Remove</a>
+                           class="font-medium text-red-600 dark:text-red-500 hover:underline">Remover</a>
                     </div>
 
                 </td>
-<!--modal de borrar usuario -->
-<!--                <div  id="delete-user-modal" tabindex="-1"   -->
-                <div  th:attr = "id=${'delete-user-modal' + empleado.id}" tabindex="-1"
+                <!--modal de borrar usuario -->
+                <!--                <div  th:attr = "id=${'delete-user-modal' + empleado.id}" tabindex="-1"  -->
+                <div id="delete-user-modal" tabindex="-1"
                      class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 md:inset-0 h-modal md:h-full">
                     <div class="relative p-4 w-full max-w-md h-full md:h-auto">
                         <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
@@ -205,11 +204,12 @@
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                           d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                                 </svg>
-                                <h3 class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">¿Está seguro de eliminar el usuario?</h3>
-                                <h4 th:text = "${empleado.nombre}"> </h4>
-<!--                                <a th:href="@{/users/{id}/delete}(id = ${empleado.id})"> -->
+                                <h3 class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">¿Está seguro de
+                                    eliminar el usuario?</h3>
+                                <h4 th:text="${empleado.nombre}"></h4>
+                                <!--                                <a th:href="@{/users/{id}/delete}(id = ${empleado.id})"> -->
 
-<!--                                <a th:href="@{/users/{id}/delete(id = {$empleado.id})}" > -->
+                                <!--                                <a th:href="@{/users/{id}/delete(id = {$empleado.id})}" > -->
                                 <a href="#">
                                     <button data-modal-toggle="delete-user-modal" type="button"
                                             class="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center mr-2">
@@ -225,86 +225,11 @@
                     </div>
                 </div>
 
-
             </tr>
 
-            <!--
-            <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                <th scope="row" class="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                    Daniel Mauricio Castellanos Gonzales
-                </th>
-                <td class="py-4 px-6">
-                    dancastell1022@gmail.com
-                </td>
-                <td class="py-4 px-6">
-                    Scrum Sprinters
-                </td>
-                <td class="py-4 px-6">
-                    Desarrollador Back-End
-                </td>
-                <td class="py-4 px-6">
-                    <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
-                </td>
-            </tr>
-            <tr class="bg-white dark:bg-gray-800">
-                <th scope="row" class="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                    Frank de Jesus Barrios Yepez
-                </th>
-                <td class="py-4 px-6">
-                    fdbarrios3@gmail.com
-                </td>
-                <td class="py-4 px-6">
-                    Scrum Sprinters
-                </td>
-                <td class="py-4 px-6">
-                    Administrador de BD
-                </td>
-                <td class="py-4 px-6">
-                    <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
-                </td>
-            </tr>
-            <tr class="bg-white dark:bg-gray-800">
-                <th scope="row" class="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                    John Alzate Buitrago
-                </th>
-                <td class="py-4 px-6">
-                    jhalzate@gmail.com
-                </td>
-                <td class="py-4 px-6">
-                    Scrum Sprinters
-                </td>
-                <td class="py-4 px-6">
-                    Analista
-                </td>
-                <td class="py-4 px-6">
-                    <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
-                </td>
-            </tr>
-            <tr class="bg-white dark:bg-gray-800">
-                <th scope="row" class="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                    Johnny III Young Ospino
-                </th>
-                <td class="py-4 px-6">
-                    youngerblack@gmail.com
-                </td>
-                <td class="py-4 px-6">
-                    Scrum Sprinters
-                </td>
-                <td class="py-4 px-6">
-                    Desarrollador Front-End
-                </td>
-                <td class="py-4 px-6">
-                    <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
-                </td>
-            </tr>
-
-            -->
             </tbody>
         </table>
     </div>
-
-
-    <!-- SIDE BAR-->
 
 
     <!--MODAL NUEVO USUARIO -->
@@ -343,22 +268,29 @@
                         <div>
                             <label for="rol"
                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Rol</label>
-                            <select id="rol"  th:field="*{rol}" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                                <option th:each="role: ${listaRoles}" th:value = "${role}" th:text="${role}">United States</option>
-<!--                                <option value="CA">Canada</option>  -->
+                            <select id="rol" th:field="*{rol}"
+                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                <option th:each="role: ${listaRoles}" th:value="${role}" th:text="${role}">rol
+                                </option>
                             </select>
-                            <!--
-                            <input type="text" th:field="*{rol}" id="rol"
-                                   class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
-                                   placeholder="Rol">
 
-                                   -->
+                        </div>
+                        <div>
+                            <label for="empresa"
+                                   class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Empresa</label>
+                            <select id="empresa" th:field="*{empresa}"
+                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                <option th:each="enterprise: ${empresas}" th:value="${enterprise}"
+                                        th:text="${enterprise.nombre}">Empresa
+                                </option>
+                            </select>
+
                         </div>
 
 
                         <button type="submit"
                                 class="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-                            Registrar usuario
+                            Registrar empleado
                         </button>
                     </form>
                 </div>
