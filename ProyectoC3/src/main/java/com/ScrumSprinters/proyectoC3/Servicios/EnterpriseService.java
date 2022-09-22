@@ -21,7 +21,7 @@ public class EnterpriseService {
     }
 
     public void saveEnterprise(Empresa empresa) { //metodo post /enterprises
-        //TODO: Generar las fechas para creado y modificado usar metodos empresa.setCreado() para escribir la informacion y luego salvarla a BD
+        empresa.setActivo(true);
         repository.save(empresa);
     }
 

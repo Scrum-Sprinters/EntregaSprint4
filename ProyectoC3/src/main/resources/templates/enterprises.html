@@ -5,9 +5,11 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Empleados</title>
+    <title>Empresas</title>
     <link rel="stylesheet" href="https://unpkg.com/flowbite@1.5.3/dist/flowbite.min.css"/>
     <script src="https://cdn.tailwindcss.com"></script>
+
+
 </head>
 
 <body class="bg-white dark:bg-gray-800">
@@ -28,7 +30,7 @@
     <!-- BOTON DE NUEVO--   solo disponible si es administrador -->
     <button data-modal-toggle="new-user-modal"
             class="inline-flex justify-center items-center py-3 px-5 text-base font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 dark:focus:ring-blue-900">
-        Nuevo empleado
+        Nueva empresa
         <svg class="ml-2 -mr-1 w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
             <path fill-rule="evenodd"
                   d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z"
@@ -36,7 +38,8 @@
         </svg>
     </button>
 
-    <!-- TABLA EMPLEADOS-->
+
+    <!-- TABLA EMPRESAS-->
     <div class="py-6"></div>
     <div class=" relative shadow-md sm:rounded-lg">
         <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
@@ -46,44 +49,43 @@
                     Nombre
                 </th>
                 <th scope="col" class="py-3 px-6">
-                    Email
+                    Nit
                 </th>
                 <th scope="col" class="py-3 px-6">
-                    Empresa
+                    Telefono
                 </th>
                 <th scope="col" class="py-3 px-6">
-                    Rol
+                    Dirección
                 </th>
                 <th scope="col" class="py-3 px-6">
-                    Acciones
+                    Empleados
+                </th>
+                <th scope="col" class="py-3 px-6">
+                    Transacciones
                 </th>
             </tr>
             </thead>
             <tbody>
-            <tr th:each="empleado :${empleados}"
+            <tr th:each="empresa :${emplesas}"
                 class="bg-white border-b dark:bg-gray-800 dark:border-gray-700  hover:bg-gray-50 dark:hover:bg-gray-600">
-                <!--                    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">-->
-                <th th:text="${empleado.nombre}" scope="row"
+                <th th:text="${empresa.nombre}" scope="row"
                     class="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                    Eduardo Mendoza Ojeda
+                    Nombre compañia
                 </th>
-                <td th:text="${empleado.correo}" class="py-4 px-6">
-                    edwards2kx@gmail.com
+                <td th:text="${empresa.nit}" class="py-4 px-6">
+                    Numero de nit
                 </td>
-                <!-- <td th:text="${empleado.empresa.nombre} != null ? (${empleado.empresa.nombre}) : 'No asignada'" class="py-4 px-6"> -->
-
-                <div th:if="${empleado.empresa!=null}">
-                    <td th:text="${empleado.empresa.nombre}" class="py-4 px-6">Scrum Sprinters</td>
-                </div>
-
-                <div th:unless="${empleado.empresa!=null}">
-                    <td class="py-4 px-6">
-                        No asignado
-                    </td>
-                </div>
-
-                <td th:text="${empleado.rol}" class="py-4 px-6">
-                    Scrum Master
+                <td th:text="${empresa.telefono}" class="py-4 px-6">
+                    Numero de telefono
+                </td>
+                <td th:text="${empresa.direccion}" class="py-4 px-6">
+                    Numero de telefono
+                </td>
+                <td th:text="${empresa.nombre}" class="py-4 px-6">
+                    Cantidad de trabajadores
+                </td>
+                <td th:text="${empresa.nombre}" class="py-4 px-6">
+                    Cantidad de transacciones
                 </td>
                 <td class="py-4 px-6">
                     <div>
@@ -146,7 +148,8 @@
         </table>
     </div>
 
-    <!--MODAL NUEVO USUARIO -->
+
+    <!--MODAL NUEVA EMPRESA -->
     <div id="new-user-modal" tabindex="-1" aria-hidden="true"
          class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 w-full md:inset-0 h-modal md:h-full">
         <div class="relative p-4 w-full max-w-md h-full md:h-auto">
@@ -164,60 +167,55 @@
                     <span class="sr-only">Close modal</span>
                 </button>
                 <div class="py-6 px-6 lg:px-8">
-                    <h3 class="mb-4 text-xl font-medium text-gray-900 dark:text-white">Ingresa los datos del nuevo
-                        empleado</h3>
-                    <form class="space-y-6" method="POST" th:action="@{/users}" th:object="${nuevoEmpleado}">
+                    <h3 class="mb-4 text-xl font-medium text-gray-900 dark:text-white">Ingresa los datos de la nueva
+                        empresa</h3>
+
+                    <form class="space-y-6" method="POST" th:action="@{/enterprises}" th:object="${nuevaEmpresa}">
                         <div>
                             <label for="nombre" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Nombre</label>
                             <input type="text" th:field="*{nombre}" id="nombre"
                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
-                                   placeholder="Juan Perez" required>
+                                   placeholder="Scrum Sprinters" required>
                         </div>
                         <div>
-                            <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Email</label>
-                            <input type="email" th:field="*{correo}" id="email"
+                            <label for="nit" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Nit</label>
+                            <input type="number" th:field="*{nit}" id="nit"
                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
-                                   placeholder="name@company.com" required>
+                                   placeholder="10987623" required>
                         </div>
+
                         <div>
-                            <label for="rol"
-                                   class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Rol</label>
-                            <select id="rol" th:field="*{rol}"
-                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                                <option th:each="role: ${listaRoles}" th:value="${role}" th:text="${role}">rol
-                                </option>
-                            </select>
-
+                            <label for="telefono" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Telefono</label>
+                            <input type="text" th:field="*{telefono}" id="telefono"
+                                   class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
+                                   placeholder="57980765" required>
                         </div>
+
                         <div>
-                            <label for="empresa"
-                                   class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Empresa</label>
-                            <select id="empresa" th:field="*{empresa_id}"
-                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                                <option th:each="enterprise: ${empresas}" th:value="${enterprise.id}"
-                                        th:text="${enterprise.nombre}">Empresa
-                                </option>
-                            </select>
-
+                            <label for="direccion" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Direccion</label>
+                            <input type="text" th:field="*{direccion}" id="direccion"
+                                   class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
+                                   placeholder="Calle X con Carrera Y" required>
                         </div>
-
 
                         <button type="submit"
                                 class="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-                            Registrar empleado
+                            Registrar empresa
                         </button>
                     </form>
                 </div>
             </div>
         </div>
     </div>
+
 </div>
 
+
 <!-- FOOTER-->
+
 <footer th:replace="fragments/header_footer::footer">
     viene desde otro archivo
 </footer>
-
 <script src="https://unpkg.com/flowbite@1.5.3/dist/flowbite.js"></script>
 </body>
 

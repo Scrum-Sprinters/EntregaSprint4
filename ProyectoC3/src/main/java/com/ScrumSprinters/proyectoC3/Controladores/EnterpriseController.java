@@ -1,13 +1,16 @@
 package com.ScrumSprinters.proyectoC3.Controladores;
 
+import com.ScrumSprinters.proyectoC3.Entidades.Empleado;
 import com.ScrumSprinters.proyectoC3.Entidades.Empresa;
 import com.ScrumSprinters.proyectoC3.Servicios.EnterpriseService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RestController
+@Controller
 public class EnterpriseController {
 
     @Autowired
@@ -15,6 +18,32 @@ public class EnterpriseController {
 
     public EnterpriseController() {
     }
+
+
+    @GetMapping("/enterprises")
+    public String getAllEnterprise(Model model) {
+        model.addAttribute("empresas", service.getAllEnterprise());
+        model.addAttribute("nuevaEmpresa", new Empresa());
+
+        for (Empresa e : service.getAllEnterprise()) {
+            System.out.println(e.toString());
+        }
+
+        return "enterprises";
+    }
+
+    @PostMapping("/enterprises")
+    public String saveEnterprise(@ModelAttribute("nuevaEmpresa") Empresa empresa) {
+        System.out.println("Antes de guardar empresa a BD");
+        System.out.println(empresa);
+        service.saveEnterprise(empresa);
+        System.out.println("Despues de guardar empresa a BD");
+        System.out.println(empresa);
+        return "redirect:/enterprises";
+    }
+
+
+/*
 
     @GetMapping("/enterprises")
     public List<Empresa> getAllEnterprise() {
@@ -44,6 +73,7 @@ public class EnterpriseController {
         service.deleteEnterpriseById(id);
         return "Se llama borrar empresa con id: " + id.toString();
     }
+*/
 
 
 }

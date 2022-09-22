@@ -18,7 +18,7 @@ public class EmployeeController {
     @Autowired
     EmployeeService service;
     @Autowired
-    EnterpriseService enterpriseService;
+    EnterpriseService enterpriseService;  //para listar las empresas al crear el nuevo empleado
 
 
 
@@ -55,6 +55,8 @@ public class EmployeeController {
         return "redirect:/users";
     }
 
+
+    //TODO: cambiar a peticion tipo post por seguridad y enviar la accion mediante un formulario
     @GetMapping("/users/{id}/delete")
     public String deleteEmployee(@PathVariable Long id){
         service.deleteEmployeeById(id);
