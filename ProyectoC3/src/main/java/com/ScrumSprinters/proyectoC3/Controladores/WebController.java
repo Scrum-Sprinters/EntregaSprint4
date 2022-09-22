@@ -7,8 +7,25 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class WebController {
 
 
-    @GetMapping("/empleados")
-    public String mostrarEmpleados() {
-        return "index2";
+
+    @GetMapping("/")
+    public String showHome() {
+        return "home";
     }
+    @GetMapping("/login")
+    public String showLogin() {
+        return "login";
+    }
+
+    @GetMapping("/register")
+    public String showRegister() {
+        return "register";
+    }
+
+    @GetMapping("/error")
+    public String showError() {
+        return "error";
+    }
+
+
 }

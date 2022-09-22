@@ -18,7 +18,7 @@ public class Empresa {
     @Column(name = "name", unique = true)
     private String nombre;
     @Column(name = "document", unique = true)
-    private long nit;
+    private Long nit;
     @Column(name = "phone")
     private String telefono;
     @Column(name = "address")
@@ -36,9 +36,14 @@ public class Empresa {
     @Column(name = "updated_at")
     private Date modificado;
 
+
+    @Column(name = "activo")
+    private Boolean activo;
+
+
     //Constructor
 
-    public Empresa(Long id, long nit, String nombre, String direccion, String telefono, Date creado, Date modificado) {
+    public Empresa(Long id, Long nit, String nombre, String direccion, String telefono, Date creado, Date modificado) {
         this.id = id;
         this.nit = nit;
         this.nombre = nombre;
@@ -50,6 +55,10 @@ public class Empresa {
 
     public Empresa() {
 
+    }
+
+    public Empresa(Long id){
+        this.id = id;
     }
 
     public Long getId() {
@@ -88,7 +97,7 @@ public class Empresa {
         this.telefono = telefono;
     }
 
-    public void setNit(long nit) {
+    public void setNit(Long nit) {
         this.nit = nit;
     }
 
@@ -116,6 +125,22 @@ public class Empresa {
         return movimientoDineros;
     }
 
+    public void setEmpleados(List<Empleado> empleados) {
+        this.empleados = empleados;
+    }
+
+    public void setMovimientoDineros(List<MovimientoDinero> movimientoDineros) {
+        this.movimientoDineros = movimientoDineros;
+    }
+
+    public Boolean getActivo() {
+        return activo;
+    }
+
+    public void setActivo(Boolean activo) {
+        this.activo = activo;
+    }
+
     @Override
     public String toString() {
         return "Empresa{" +
@@ -124,10 +149,9 @@ public class Empresa {
                 ", nit=" + nit +
                 ", telefono='" + telefono + '\'' +
                 ", direccion='" + direccion + '\'' +
-                ", empleados=" + empleados +
-                ", movimientoDineros=" + movimientoDineros +
                 ", creado=" + creado +
                 ", modificado=" + modificado +
+                ", activo=" + activo +
                 '}';
     }
 }

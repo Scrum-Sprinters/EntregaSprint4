@@ -19,6 +19,11 @@ public class EmployeeService {
     }
 
     public void saveEmployee(Empleado empleado) { //post /users
+        // si no viene el objeto empresa pero si el id de la empresa se crea una empresa solo con id y se guarda en base de datos
+        if (empleado.getEmpresa() == null)
+            if(empleado.getEmpresa_id() != null)
+                empleado.setEmpresa(new Empresa(empleado.getEmpresa_id()));
+
         repository.save(empleado);
     }
 

@@ -29,6 +29,14 @@ public class Empleado {
     @Column(name = "updated_at")
     private Date modificado;
 
+    @Column(name = "activo")
+    private Boolean activo;
+
+
+    @Transient
+    private Long empresa_id;
+
+
     public Empleado() {
     }
 
@@ -88,6 +96,20 @@ public class Empleado {
         this.modificado = modificado;
     }
 
+    public Long getEmpresa_id() {
+        return empresa_id;
+    }
+
+    public void setEmpresa_id(Long empresa_id) {
+        this.empresa_id = empresa_id;
+    }
+    public Boolean getActivo() {
+        return activo;
+    }
+
+    public void setActivo(Boolean activo) {
+        this.activo = activo;
+    }
 
     @Override
     public String toString() {
@@ -96,9 +118,10 @@ public class Empleado {
                 ", nombre='" + nombre + '\'' +
                 ", correo='" + correo + '\'' +
                 ", rol=" + rol +
-                ", empresa=" + empresa +
                 ", creado=" + creado +
                 ", modificado=" + modificado +
+                ", activo=" + activo +
+                ", empresa_id=" + empresa_id +
                 '}';
     }
 }

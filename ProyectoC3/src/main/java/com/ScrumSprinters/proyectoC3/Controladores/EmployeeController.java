@@ -39,8 +39,7 @@ public class EmployeeController {
         model.addAttribute("listaRoles" , roles);
 
         for(Empleado e : service.getAllEmployees()) {
-            System.out.println(e.getNombre());
-            System.out.println(e.getEmpresa());
+            System.out.println(e.toString());
         }
         return "users";
     }
