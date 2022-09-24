@@ -21,14 +21,9 @@
 <div class="px-6 dark:bg-gray-700 dark:text-gray-400 h-screen">
 
     <!-- TITULO GRANDE-->
-    <div class="text-center py-4">
-        <h1
-                class="mb-4 text-4xl font-extrabold tracking-tight leading-none text-gray-900 md:text-5xl lg:text-6xl dark:text-white">
-            Sistema de gestión de ingresos y gastos </h1>
-    </div>
-
+<div th:replace="fragments/header_footer::titulo_app" > viene desde otro archivo</div>
     <!-- BOTON DE NUEVO--   solo disponible si es administrador -->
-    <button data-modal-toggle="new-user-modal"
+    <button data-modal-toggle="new-element-modal"
             class="inline-flex justify-center items-center py-3 px-5 text-base font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 dark:focus:ring-blue-900">
         Nueva empresa
         <svg class="ml-2 -mr-1 w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
@@ -63,10 +58,13 @@
                 <th scope="col" class="py-3 px-6">
                     Transacciones
                 </th>
+                <th scope="col" class="py-3 px-6">
+                    Acciones
+                </th>
             </tr>
             </thead>
             <tbody>
-            <tr th:each="empresa :${emplesas}"
+            <tr th:each="empresa :${empresas}"
                 class="bg-white border-b dark:bg-gray-800 dark:border-gray-700  hover:bg-gray-50 dark:hover:bg-gray-600">
                 <th th:text="${empresa.nombre}" scope="row"
                     class="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white">
@@ -81,11 +79,11 @@
                 <td th:text="${empresa.direccion}" class="py-4 px-6">
                     Numero de telefono
                 </td>
-                <td th:text="${empresa.nombre}" class="py-4 px-6">
-                    Cantidad de trabajadores
+                <td  th:text = "${empresa.empleados.size()}"  class="py-4 px-6">
+                    # Cantidad de trabajadores
                 </td>
-                <td th:text="${empresa.nombre}" class="py-4 px-6">
-                    Cantidad de transacciones
+                <td th:text = "${empresa.movimientoDineros.size()}"class="py-4 px-6">
+                    # de transacciones
                 </td>
                 <td class="py-4 px-6">
                     <div>
@@ -123,7 +121,7 @@
                                 </svg>
                                 <h3 class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">¿Está seguro de
                                     eliminar el usuario?</h3>
-                                <h4 th:text="${empleado.nombre}"></h4>
+                                <h4 th:text="${empresa.nombre}"></h4>
                                 <!--                                <a th:href="@{/users/{id}/delete}(id = ${empleado.id})"> -->
 
                                 <!--                                <a th:href="@{/users/{id}/delete(id = {$empleado.id})}" > -->
@@ -150,14 +148,14 @@
 
 
     <!--MODAL NUEVA EMPRESA -->
-    <div id="new-user-modal" tabindex="-1" aria-hidden="true"
+    <div id="new-element-modal" tabindex="-1" aria-hidden="true"
          class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 w-full md:inset-0 h-modal md:h-full">
         <div class="relative p-4 w-full max-w-md h-full md:h-auto">
             <!-- Modal content -->
             <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
                 <button type="button"
                         class="absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-800 dark:hover:text-white"
-                        data-modal-toggle="new-user-modal">
+                        data-modal-toggle="new-element-modal">
                     <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"
                          xmlns="http://www.w3.org/2000/svg">
                         <path fill-rule="evenodd"
@@ -192,7 +190,7 @@
                         </div>
 
                         <div>
-                            <label for="direccion" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Direccion</label>
+                            <label for="direccion" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Dirección</label>
                             <input type="text" th:field="*{direccion}" id="direccion"
                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
                                    placeholder="Calle X con Carrera Y" required>
@@ -200,7 +198,7 @@
 
                         <button type="submit"
                                 class="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-                            Registrar empresa
+                            Registrar Empresa
                         </button>
                     </form>
                 </div>

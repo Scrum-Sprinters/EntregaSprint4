@@ -19,7 +19,6 @@ public class EnterpriseController {
     public EnterpriseController() {
     }
 
-
     @GetMapping("/enterprises")
     public String getAllEnterprise(Model model) {
         model.addAttribute("empresas", service.getAllEnterprise());

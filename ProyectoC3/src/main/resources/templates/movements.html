@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Empleados</title>
+    <title>Transacciones</title>
     <link rel="stylesheet" href="https://unpkg.com/flowbite@1.5.3/dist/flowbite.min.css"/>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
@@ -20,10 +20,11 @@
 
     <!-- TITULO GRANDE-->
     <div th:replace="fragments/header_footer::titulo_app"> viene desde otro archivo</div>
+
     <!-- BOTON DE NUEVO--   solo disponible si es administrador -->
-    <button data-modal-toggle="new-user-modal"
+    <button data-modal-toggle="new-element-modal"
             class="inline-flex justify-center items-center py-3 px-5 text-base font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 dark:focus:ring-blue-900">
-        Nuevo empleado
+        Nueva transacción
         <svg class="ml-2 -mr-1 w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
             <path fill-rule="evenodd"
                   d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z"
@@ -31,23 +32,23 @@
         </svg>
     </button>
 
-    <!-- TABLA EMPLEADOS-->
+    <!-- TABLA TRANSACCIONES DE X EMPRESA-->
     <div class="py-6"></div>
     <div class=" relative shadow-md sm:rounded-lg">
         <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
             <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
             <tr>
                 <th scope="col" class="py-3 px-6">
-                    Nombre
+                    Concepto
                 </th>
                 <th scope="col" class="py-3 px-6">
-                    Email
+                    Monto
                 </th>
                 <th scope="col" class="py-3 px-6">
-                    Empresa
+                    Empleado
                 </th>
                 <th scope="col" class="py-3 px-6">
-                    Rol
+                    Fecha modificación
                 </th>
                 <th scope="col" class="py-3 px-6">
                     Acciones
@@ -55,30 +56,21 @@
             </tr>
             </thead>
             <tbody>
-            <tr th:each="empleado :${empleados}"
+            <tr th:each="movement :${movements}"
                 class="bg-white border-b dark:bg-gray-800 dark:border-gray-700  hover:bg-gray-50 dark:hover:bg-gray-600">
-                <!--                    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">-->
-                <th th:text="${empleado.nombre}" scope="row"
+                <th th:text="${movement.concepto}" scope="row"
                     class="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                    Eduardo Mendoza Ojeda
+                    Concepto
                 </th>
-                <td th:text="${empleado.correo}" class="py-4 px-6">
-                    edwards2kx@gmail.com
+                <td th:text="${movement.monto}" class="py-4 px-6">
+                    Monto
                 </td>
-                <!-- <td th:text="${empleado.empresa.nombre} != null ? (${empleado.empresa.nombre}) : 'No asignada'" class="py-4 px-6"> -->
-
-                <div th:if="${empleado.empresa!=null}">
-                    <td th:text="${empleado.empresa.nombre}" class="py-4 px-6">Scrum Sprinters</td>
-                </div>
-
-                <div th:unless="${empleado.empresa!=null}">
-                    <td class="py-4 px-6">
-                        No asignado
-                    </td>
-                </div>
-
-                <td th:text="${empleado.rol}" class="py-4 px-6">
-                    Scrum Master
+                <!-- empleado -->
+                <td th:text="${movement.empleado.nombre}" class="py-4 px-6">
+                    Empleado
+                </td>
+                <td th:text="${movement.modificado.toString()}" class="py-4 px-6">
+                    Fecha modificado
                 </td>
                 <td class="py-4 px-6">
                     <div>
@@ -88,7 +80,6 @@
                         <a href="#" type="button" data-modal-toggle="delete-user-modal"
                            class="font-medium text-red-600 dark:text-red-500 hover:underline">Remover</a>
                     </div>
-
                 </td>
                 <!--modal de borrar usuario -->
                 <!--                <div  th:attr = "id=${'delete-user-modal' + empleado.id}" tabindex="-1"  -->
@@ -116,7 +107,7 @@
                                 </svg>
                                 <h3 class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">¿Está seguro de
                                     eliminar el usuario?</h3>
-                                <h4 th:text="${empleado.nombre}"></h4>
+                                <h4 th:text="${movement.concepto}"></h4>
                                 <!--                                <a th:href="@{/users/{id}/delete}(id = ${empleado.id})"> -->
 
                                 <!--                                <a th:href="@{/users/{id}/delete(id = {$empleado.id})}" > -->
@@ -134,22 +125,22 @@
                         </div>
                     </div>
                 </div>
-
             </tr>
-
             </tbody>
         </table>
+        <div> Total Movimientos <span th:text="${totalMovimientos}">0000</span></div>
     </div>
 
-    <!--MODAL NUEVO USUARIO -->
-    <div id="new-user-modal" tabindex="-1" aria-hidden="true"
+
+    <!--MODAL NUEVA TRANSACCION -->
+    <div id="new-element-modal" tabindex="-1" aria-hidden="true"
          class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 w-full md:inset-0 h-modal md:h-full">
         <div class="relative p-4 w-full max-w-md h-full md:h-auto">
             <!-- Modal content -->
             <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
                 <button type="button"
                         class="absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-800 dark:hover:text-white"
-                        data-modal-toggle="new-user-modal">
+                        data-modal-toggle="new-element-modal">
                     <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"
                          xmlns="http://www.w3.org/2000/svg">
                         <path fill-rule="evenodd"
@@ -159,56 +150,52 @@
                     <span class="sr-only">Close modal</span>
                 </button>
                 <div class="py-6 px-6 lg:px-8">
-                    <h3 class="mb-4 text-xl font-medium text-gray-900 dark:text-white">Ingresa los datos del nuevo
-                        empleado</h3>
-                    <form class="space-y-6" method="POST" th:action="@{/users}" th:object="${nuevoEmpleado}">
+                    <h3 class="mb-4 text-xl font-medium text-gray-900 dark:text-white">Registra la nueva
+                        transacción</h3>
+
+                    <form class="space-y-6" method="POST" th:action="@{/enterprises/{id}/movements(id = ${empresa_id})}"
+                          th:object="${nuevoMovimiento}">
                         <div>
-                            <label for="nombre" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Nombre</label>
-                            <input type="text" th:field="*{nombre}" id="nombre"
+                            <label for="concepto"
+                                   class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Concepto</label>
+                            <input type="text" th:field="*{concepto}" id="concepto"
                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
-                                   placeholder="Juan Perez" required>
+                                   placeholder="Pago a proveedor" required>
                         </div>
                         <div>
-                            <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Email</label>
-                            <input type="email" th:field="*{correo}" id="email"
+                            <label for="monto" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Monto</label>
+                            <input type="number" th:field="*{monto}" id="monto"
                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
-                                   placeholder="name@company.com" required>
-                        </div>
-                        <div>
-                            <label for="rol"
-                                   class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Rol</label>
-                            <select id="rol" th:field="*{rol}"
-                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                                <option th:each="role: ${listaRoles}" th:value="${role}" th:text="${role}">rol
-                                </option>
-                            </select>
-
-                        </div>
-                        <div>
-                            <label for="empresa"
-                                   class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Empresa</label>
-                            <select id="empresa" th:field="*{empresa_id}"
-                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                                <option th:each="enterprise: ${empresas}" th:value="${enterprise.id}"
-                                        th:text="${enterprise.nombre}">Empresa
-                                </option>
-                            </select>
-
+                                   placeholder="200000" required>
                         </div>
 
+                        <!-- escoger quien realiza la transaccion -->
+                        <!--
+                                                <label for="empleado"
+                                                       class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Empleado</label>
+                                                <select id="empleado" th:field="*{empleado}"
+                                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                                    <option th:each="enterprise: ${empresas}" th:value="${enterprise.id}"
+                                                            th:text="${enterprise.nombre}">Empresa
+                                                    </option>
+                                                </select>
+                        -->
 
                         <button type="submit"
                                 class="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-                            Registrar empleado
+                            Registrar Transacción
                         </button>
                     </form>
                 </div>
             </div>
         </div>
     </div>
+
 </div>
 
+
 <!-- FOOTER-->
+
 <footer th:replace="fragments/header_footer::footer">
     viene desde otro archivo
 </footer>

@@ -30,7 +30,6 @@ public class MovimientoDinero {
     private Date modificado;
 
     public MovimientoDinero() {
-
     }
 
     public Long getId() {
