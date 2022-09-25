@@ -18,10 +18,10 @@
     viene desde otro archivo
 </navbar>
 <!-- container general del contenido-->
-<div class="px-6 dark:bg-gray-700 dark:text-gray-400 h-screen">
+<div class="px-6 dark:bg-gray-900 dark:text-gray-400 h-screen">
 
     <!-- TITULO GRANDE-->
-<div th:replace="fragments/header_footer::titulo_app" > viene desde otro archivo</div>
+    <div th:replace="fragments/header_footer::titulo_app"> viene desde otro archivo</div>
     <!-- BOTON DE NUEVO--   solo disponible si es administrador -->
     <button data-modal-toggle="new-element-modal"
             class="inline-flex justify-center items-center py-3 px-5 text-base font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 dark:focus:ring-blue-900">
@@ -66,10 +66,10 @@
             <tbody>
             <tr th:each="empresa :${empresas}"
                 class="bg-white border-b dark:bg-gray-800 dark:border-gray-700  hover:bg-gray-50 dark:hover:bg-gray-600">
-                <th th:text="${empresa.nombre}" scope="row"
-                    class="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                    Nombre compañia
-                </th>
+                    <th th:text="${empresa.nombre}" scope="row"
+                        class="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                        Nombre compañia
+                    </th>
                 <td th:text="${empresa.nit}" class="py-4 px-6">
                     Numero de nit
                 </td>
@@ -79,66 +79,24 @@
                 <td th:text="${empresa.direccion}" class="py-4 px-6">
                     Numero de telefono
                 </td>
-                <td  th:text = "${empresa.empleados.size()}"  class="py-4 px-6">
+                <td th:text="${empresa.empleados.size()}" class="py-4 px-6">
                     # Cantidad de trabajadores
                 </td>
-                <td th:text = "${empresa.movimientoDineros.size()}"class="py-4 px-6">
+                <td th:text="${empresa.movimientoDineros.size()}" class="py-4 px-6">
                     # de transacciones
                 </td>
                 <td class="py-4 px-6">
-                    <div>
-                        <a href="#" type="button" data-modal-toggle="delete-user-modal"
+                    <div class="flex items-center justify-between ">
+                        <a th:href="@{enterprises/{id}/movements (id=${empresa.id})}" type="button"
+                           class="font-medium text-blue-600 dark:text-green-500 hover:underline">Transacciones</a>
+                        <a href="#" type="button"
                            class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Editar</a>
-                        <div class="px-4"></div>
-                        <a href="#" type="button" data-modal-toggle="delete-user-modal"
+                        <a th:href="@{enterprises/{id}/delete (id=${empresa.id})}" type="button"
                            class="font-medium text-red-600 dark:text-red-500 hover:underline">Remover</a>
+
                     </div>
 
                 </td>
-                <!--modal de borrar usuario -->
-                <!--                <div  th:attr = "id=${'delete-user-modal' + empleado.id}" tabindex="-1"  -->
-                <div id="delete-user-modal" tabindex="-1"
-                     class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 md:inset-0 h-modal md:h-full">
-                    <div class="relative p-4 w-full max-w-md h-full md:h-auto">
-                        <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
-                            <button type="button"
-                                    class="absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-800 dark:hover:text-white"
-                                    data-modal-toggle="delete-user-modal">
-                                <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"
-                                     xmlns="http://www.w3.org/2000/svg">
-                                    <path fill-rule="evenodd"
-                                          d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
-                                          clip-rule="evenodd"></path>
-                                </svg>
-                                <span class="sr-only">Close modal</span>
-                            </button>
-                            <div class="p-6 text-center">
-                                <svg aria-hidden="true" class="mx-auto mb-4 w-14 h-14 text-gray-400 dark:text-gray-200"
-                                     fill="none" stroke="currentColor" viewBox="0 0 24 24"
-                                     xmlns="http://www.w3.org/2000/svg">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                          d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                                </svg>
-                                <h3 class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">¿Está seguro de
-                                    eliminar el usuario?</h3>
-                                <h4 th:text="${empresa.nombre}"></h4>
-                                <!--                                <a th:href="@{/users/{id}/delete}(id = ${empleado.id})"> -->
-
-                                <!--                                <a th:href="@{/users/{id}/delete(id = {$empleado.id})}" > -->
-                                <a href="#">
-                                    <button data-modal-toggle="delete-user-modal" type="button"
-                                            class="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center mr-2">
-                                        Si, estoy seguro
-                                    </button>
-                                </a>
-                                <button data-modal-toggle="delete-user-modal" type="button"
-                                        class="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-200 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600">
-                                    No, cancelar
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
 
             </tr>
 
@@ -176,21 +134,24 @@
                                    placeholder="Scrum Sprinters" required>
                         </div>
                         <div>
-                            <label for="nit" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Nit</label>
+                            <label for="nit"
+                                   class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Nit</label>
                             <input type="number" th:field="*{nit}" id="nit"
                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
                                    placeholder="10987623" required>
                         </div>
 
                         <div>
-                            <label for="telefono" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Telefono</label>
+                            <label for="telefono"
+                                   class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Telefono</label>
                             <input type="text" th:field="*{telefono}" id="telefono"
                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
                                    placeholder="57980765" required>
                         </div>
 
                         <div>
-                            <label for="direccion" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Dirección</label>
+                            <label for="direccion"
+                                   class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Dirección</label>
                             <input type="text" th:field="*{direccion}" id="direccion"
                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
                                    placeholder="Calle X con Carrera Y" required>

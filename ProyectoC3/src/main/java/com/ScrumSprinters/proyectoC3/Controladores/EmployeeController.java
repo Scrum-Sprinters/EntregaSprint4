@@ -46,7 +46,6 @@ public class EmployeeController {
     @PostMapping("/users")
     public String saveEmployee(@ModelAttribute("nuevoEmpleado") Empleado empleado) {
 //        model.addAttribute("empleados" ,  service.getAllEmployees());
-        //TODO: modificar el metodo para que sea capaz de indetificar si es un nuevo usuario o uno ya existente mediante la fecha y enviando el id
         System.out.println("antes de guardar a base de datos");
         System.out.println(empleado);
 
@@ -60,6 +59,40 @@ public class EmployeeController {
     }
 
 
+    @PostMapping("/users/{id}")
+    public String saveEmployeex(@ModelAttribute("empleado") Empleado empleado, @PathVariable Long id) {
+//        model.addAttribute("empleados" ,  service.getAllEmployees());
+        //TODO: modificar el metodo para que sea capaz de indetificar si es un nuevo usuario o uno ya existente mediante la fecha y enviando el id
+        System.out.println("antes de guardar usuario editado /users/{id}");
+        System.out.println(empleado);
+
+        if (empleado.getId() == 0) {
+            System.out.println("No tenia ID");
+            empleado.setId(id);
+            service.saveEmployee(empleado);
+            System.out.println("despues de guardar a base de datos x");
+            System.out.println(empleado);
+        } else {
+            System.out.println("ya tenia ID");
+            service.saveEmployee(empleado);
+            System.out.println("despues de guardar a base de datos x");
+            System.out.println(empleado);
+        }
+
+
+        return "redirect:/users";
+    }
+
+
+
+
+/*
+    @PostMapping("/users")
+    public String updateEmployee(@ModelAttribute("")){
+        return "redirect:/users";
+    }
+*/
+
     //TODO: cambiar a peticion tipo post por seguridad y enviar la accion mediante un formulario
     @GetMapping("/users/{id}/delete")
     public String deleteEmployee(@PathVariable Long id) {
@@ -70,13 +103,8 @@ public class EmployeeController {
 
     @GetMapping("/users/{id}")
     public String editEmployee(@PathVariable Long id, Model model) {
-//        List<String> roles = new ArrayList<String>();
         EnumRole[] listaRoles = EnumRole.values();
 
-/*        for (EnumRole rol:listaRoles) {
-            roles.add(rol.toString());
-        }
-*/
         //TODO: incluir un try catch por si no viene el empleado
         Empleado empleado = service.getEmployeeById(id);
         System.out.println("se encontro el siguiente empleado");

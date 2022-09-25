@@ -23,8 +23,12 @@ public class EmployeeService {
 
         empleado.setActivo(true);
         if (empleado.getEmpresa() == null)
-            if(empleado.getEmpresa_id() != null)
+            if (empleado.getEmpresa_id() != null)
                 empleado.setEmpresa(new Empresa(empleado.getEmpresa_id()));
+
+        if (empleado.getId() != 0) {
+            empleado.setCreado(repository.findById(empleado.getId()).get().getCreado());
+        }
 
         repository.save(empleado);
     }

@@ -10,7 +10,8 @@ public class WebController {
 
     @GetMapping("/")
     public String showHome() {
-        return "home";
+//        return "home";
+        return "redirect:/login";
     }
     @GetMapping("/login")
     public String showLogin() {
