@@ -25,8 +25,6 @@ public class TransactionController {
         //ir al servicio y traer la lista de transacciones de la empresa X
         //model.addAttribute(new Empleado());
 
-
-
         //TODO: revisar si es necesario enviar la empresa a la vista
         model.addAttribute("empresa_id", id);
         model.addAttribute("nuevoMovimiento", new MovimientoDinero());
@@ -42,6 +40,8 @@ public class TransactionController {
             model.addAttribute("totalMovimientos", totalMovimientos);
 
         } catch (Exception e) {
+            System.out.println(e.toString());
+            System.out.println("mensaje de error desde el controlador de enterprises/{id}/movements");
             return "error";
         }
 
@@ -51,11 +51,12 @@ public class TransactionController {
 
     @PostMapping("/enterprises/{id}/movements")
     public String postNewTransaction(@PathVariable Long id, @ModelAttribute("nuevoMovimiento") MovimientoDinero nuevoMovimiento) {
-        long empleado_id = 7; //TODO: eliminar este id hardcode
+        long empleado_id = 3; //TODO: eliminar este id hardcode
 
         try {
             service.saveTransaction(nuevoMovimiento, id, empleado_id);
         } catch (Exception e) {
+            System.out.println(e.toString());
             return "error";
         }
 
