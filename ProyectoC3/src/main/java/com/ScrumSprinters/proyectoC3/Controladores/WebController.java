@@ -11,8 +11,11 @@ public class WebController {
     @GetMapping("/")
     public String showHome() {
 //        return "home";
-        return "redirect:/login";
+//        return "redirect:/login";
+        return "redirect:/users";
     }
+
+    //TODO: si usuario ya está logeado debe redirigir a home
     @GetMapping("/login")
     public String showLogin() {
         return "login";
@@ -27,6 +30,7 @@ public class WebController {
     public String showError() {
         return "error";
     }
+
 
 
 }

@@ -64,6 +64,16 @@
                                class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Sign
                                 out</a>
                         </li>
+
+                        <li>
+                            <form method="post" th:action="@{/logout}">
+                            <button class = "block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white" type="submit">
+                                Cerrar sesión
+                            </button>
+                            </form>
+                        </li>
+
+
                     </ul>
                 </div>
                 <button data-collapse-toggle="mobile-menu-2" type="button"
