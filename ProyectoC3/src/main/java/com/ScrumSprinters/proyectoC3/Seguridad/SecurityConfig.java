@@ -9,23 +9,57 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 
 @Configuration
 @EnableWebSecurity
-public class SecurityConfig extends WebSecurityConfigurerAdapter  {
+public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.inMemoryAuthentication()
-                .withUser("admin")
-                .password("{noop}123")
+                .withUser("admin@scrumsprinter.com")
+                .password("{noop}admin1234")
                 .roles("ADMIN", "USER")
                 .and()
-                .withUser("user")
-                .password("{noop}456")
+                .withUser("user@scrumsprinter.com")
+                .password("{noop}user5678")
                 .roles("USER")
-                ;
+        ;
     }
 
     @Override
-    protected void configure(HttpSecurity http){
+    protected void configure(HttpSecurity http) throws Exception {
+
+        http.authorizeRequests()
+
+//                .antMatchers("/usuario/delete/**").hasAnyRole("ADMIN")
+                .antMatchers("/users/**").hasAnyRole("ADMIN","USER")
+                .antMatchers("/enterprises/**").hasAnyRole("ADMIN")
+//                .antMatchers("/enterprises/**").hasAnyRole("ADMIN","USER")
+
+                .antMatchers("/").permitAll()
+                .antMatchers("/login").permitAll()
+
+
+                .and()
+
+
+                .formLogin()
+                .loginPage("/login")
+                .usernameParameter("email")
+                .passwordParameter("password")
+                .defaultSuccessUrl("/")
+
+
+                .and()
+                .logout()
+                .logoutUrl("/logout")
+                .logoutSuccessUrl("/login")
+
+                .and()
+
+                .exceptionHandling()
+                .accessDeniedPage("/errores/403")
+        ;
+
+
 
     }
 }

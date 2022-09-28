@@ -14,7 +14,7 @@ public class Empleado {
     private long id;
     @Column(name = "name")
     private String nombre;
-    @Column(name = "email")
+    @Column(name = "email" , unique = true)
     private String correo;
     @Enumerated(EnumType.STRING)
     @Column(name = "role")

@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Login</title>
+
+    <link rel="stylesheet" href="https://unpkg.com/flowbite@1.5.3/dist/flowbite.min.css"/>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-white dark:bg-gray-900">
+<navbar th:replace="fragments/header_footer::navbar">
+    viene desde otro archivo
+</navbar>
+
+<p >index o pagina principal , si el usuario no está asignado como empleado debe esperar a un admin</p>
+
+<br>
+<p> Usuario : <span sec:authentication = "name"> *nombre usuario</span></p>
+<p> roles : <span sec:authentication ="principal.authorities"> *roles de usuario</span> </p>
+
+
+<!-- FOOTER-->
+<footer th:replace="fragments/header_footer::footer">
+    viene desde otro archivo
+</footer>
+
+<script src="https://unpkg.com/flowbite@1.5.3/dist/flowbite.js"></script>
+
+</body>
