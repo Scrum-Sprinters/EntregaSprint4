@@ -24,7 +24,7 @@
     <div th:replace="fragments/header_footer::titulo_app"> viene desde otro archivo</div>
     <!-- BOTON DE NUEVO--   solo disponible si es administrador -->
 
-    <button sec:authorize="has_role('ROLE_ADMIN')" data-modal-toggle="new-user-modal"
+    <button sec:authorize="hasRole('ROLE_ADMIN')" data-modal-toggle="new-user-modal"
             class="inline-flex justify-center items-center py-3 px-5 text-base font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 dark:focus:ring-blue-900">
         Nuevo empleado
         <svg class="ml-2 -mr-1 w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">

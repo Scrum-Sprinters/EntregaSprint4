@@ -38,8 +38,9 @@ public class EmployeeService {
     }
 
     public Empleado getEmployeeById(Long id) { //metodo get /users/{id}
-        var empleado = repository.findById(id);
-        return empleado.get();
+        var empleado = repository.findById(id).get();
+        empleado.setEmpresa_id(empleado.getEmpresa().getId());
+        return empleado;
     }
 
     public void updateEmployeeById(Empleado empleado) { //metodo patch /enterprises/{id}
