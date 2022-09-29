@@ -20,7 +20,7 @@ public class Empleado {
     @Column(name = "role")
     private EnumRole rol;
     @ManyToOne
-    @JoinColumn(name = "enterprise_id")
+    @JoinColumn(name = "enterprise_id" )
     private Empresa empresa;
     @CreationTimestamp
     @Column(name = "created_at")

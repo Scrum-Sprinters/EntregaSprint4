@@ -17,7 +17,7 @@ public class WebController {
     public String showHome(@AuthenticationPrincipal User user) {
 
         System.out.println("usuario que hiz login" + user);
-        return "/index";
+        return "/users";
 //        return "home";
 //        return "redirect:/login";
 //        return "redirect:/users";

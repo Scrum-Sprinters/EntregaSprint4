@@ -25,10 +25,10 @@ public class Empresa {
     @Column(name = "address")
     private String direccion;
     @JsonIgnore
-    @OneToMany(mappedBy = "empresa")
+    @OneToMany(mappedBy = "empresa", cascade = CascadeType.ALL)
     private List<Empleado> empleados;
     @JsonIgnore
-    @OneToMany(mappedBy = "empresa")
+    @OneToMany(mappedBy = "empresa", cascade = CascadeType.ALL)
     private List<MovimientoDinero> movimientoDineros;
     @CreationTimestamp
     @Column(name = "created_at")

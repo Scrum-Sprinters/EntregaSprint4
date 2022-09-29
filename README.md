@@ -1,3 +1,3 @@
-# EntregaSprint3
+# EntregaSprint4
 
-Espacio para crear los controladores y los servicios de las entidades creadas en el sprint 2
+Subir la aplicacion terminada a un servidor en Heroku con base de datos en Supabase
