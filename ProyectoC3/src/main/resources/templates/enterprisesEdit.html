@@ -5,7 +5,7 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Editar Empleado</title>
+    <title>Editar Empresa</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://unpkg.com/flowbite@1.5.3/dist/flowbite.min.css"/>
 
@@ -13,14 +13,14 @@
 
 <body class="bg-white dark:bg-gray-800">
 <!-- navbar-->
-<navbar th:replace="fragments/header_footer::navbar_empleados">
+<navbar th:replace="fragments/header_footer::navbar_empresas">
     NavBar viene desde otro archivo
 </navbar>
 <div class=" py-4 w-screen flex justify-center items-center">
     <div class="p-4 w-full max-w-sm bg-white rounded-lg border border-gray-200 shadow-md sm:p-6 md:p-8 dark:bg-gray-800 dark:border-gray-700  items-center">
         <div>
-            <form class="space-y-6" method="POST" th:action="@{/users/{id}(id = *{id} ) }" th:object="${empleado}">
-                <h5 class="text-xl font-medium text-gray-900 dark:text-white">Editar empleado</h5>
+            <form class="space-y-6" method="POST" th:action="@{/enterprises/{id}(id = *{id} ) }" th:object="${empresa}">
+                <h5 class="text-xl font-medium text-gray-900 dark:text-white">Editar empresa</h5>
                 <div>
                     <label for="identificador" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Identificador
                         único</label>
@@ -31,39 +31,34 @@
                            disabled>
                 </div>
                 <div>
-                    <label for="nombre"
+                    <label for="nombreEmpresa"
                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Nombre</label>
-                    <input type="text" th:field="*{nombre}" id="nombre" th:value="*{nombre}"
+                    <input type="text" th:field="*{nombre}" id="nombreEmpresa" th:value="*{nombre}"
                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
-                           placeholder="Juan Perez" required>
+                           placeholder="Scrum Sprinters" required>
                 </div>
                 <div>
-                    <label for="correo" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">E-mail</label>
-                    <input type="email" th:field="*{correo}" id="correo" th:value="*{correo}"
+                    <label for="nitEmpresa" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">NIT</label>
+                    <input type="number" th:field="*{nit}" id="nitEmpresa" th:value="*{nit}"
                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
-                           placeholder="nombre@empresa.com" required>
-                </div>
-                <div>
-                    <label for="rol"
-                           class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Rol</label>
-                    <select id="rol" th:field="*{rol}"
-                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                        <option th:each="role: ${listaRoles}" th:value="${role.name()}" th:text="${role.name()}" th:selected="${role.name()}">rol
-                        </option>
-                    </select>
+                           placeholder="123456789" required>
                 </div>
 
                 <div>
-                    <label for="empresa"
-                           class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Empresa</label>
-                    <select id="empresa" th:field="*{empresa_id}"
-                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                        <option th:each="enterprise: ${empresas}" th:value="${enterprise.id}"
-                                th:text="${enterprise.nombre}" th:selected="${empresa_id}">Empresa
-                        </option>
-                    </select>
-
+                    <label for="telefonoEmpresa" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Telefono</label>
+                    <input type="text" th:field="*{telefono}" id="telefonoEmpresa" th:value="*{telefono}"
+                           class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
+                           placeholder="57345612">
                 </div>
+
+                <div>
+                    <label for="direccionEmpresa" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Dirección</label>
+                    <input type="text" th:field="*{direccion}" id="direccionEmpresa" th:value="*{direccion}"
+                           class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
+                           placeholder="Avenida 5 calle 2 Bogota DC" required>
+                </div>
+
+
 
 
                 <div class="flex items-start">

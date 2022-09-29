@@ -15,11 +15,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.inMemoryAuthentication()
                 .withUser("admin@scrumsprinter.com")
-                .password("{noop}admin1234")
+                .password("{noop}@dm1n1234###")
                 .roles("ADMIN", "USER")
                 .and()
                 .withUser("user@scrumsprinter.com")
-                .password("{noop}user5678")
+                .password("{noop}us3r1234###")
                 .roles("USER")
         ;
     }

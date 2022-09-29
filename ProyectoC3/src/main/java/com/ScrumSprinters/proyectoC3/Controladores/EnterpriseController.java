@@ -2,6 +2,7 @@ package com.ScrumSprinters.proyectoC3.Controladores;
 
 import com.ScrumSprinters.proyectoC3.Entidades.Empleado;
 import com.ScrumSprinters.proyectoC3.Entidades.Empresa;
+import com.ScrumSprinters.proyectoC3.Entidades.EnumRole;
 import com.ScrumSprinters.proyectoC3.Servicios.EnterpriseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -40,6 +41,48 @@ public class EnterpriseController {
         System.out.println(empresa);
         return "redirect:/enterprises";
     }
+
+    @PostMapping("/enterprises/{id}")
+    public String saveEnterprise(@ModelAttribute("empresa") Empresa empresa, @PathVariable Long id) {
+
+        System.out.println("antes de guardar empresa editada /enterprises/{id}");
+        System.out.println(empresa);
+
+        if (empresa.getId() == 0) {
+            System.out.println("No tenia ID");
+            empresa.setId(id);
+        } else
+            System.out.println("ya tenia ID");
+
+
+        service.saveEnterprise(empresa);
+        System.out.println("despues de guardar a base de datos x");
+        System.out.println(empresa);
+        return "redirect:/enterprises";
+    }
+
+
+    @GetMapping("/enterprises/{id}")
+    public String editEnterprise(@PathVariable Long id, Model model) {
+
+        //TODO: incluir un try catch por si no viene el empleado
+        Empresa empresa = service.getEnterpriseById(id);
+        System.out.println("se encontro la siguiente empresa");
+        System.out.println(empresa);
+        model.addAttribute("empresa", empresa);
+        return "enterprisesEdit";
+    }
+
+
+    @PostMapping("/enterprises/{id}/delete")
+    public String deleteEnterprise(@PathVariable Long id) {
+        service.deleteEnterpriseById(id);
+        return "redirect:/enterprises";
+    }
+
+
+
+
 
 
 /*

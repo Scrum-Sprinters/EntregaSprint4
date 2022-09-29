@@ -19,7 +19,6 @@ public class TransactionService {
     TransactionRepository repository;
     @Autowired
     EnterpriseRepository enterpriseRepository;
-
     @Autowired
     EmployeeRepository empleadoRepository;
 
@@ -31,6 +30,11 @@ public class TransactionService {
         //se debe filtar por id_empresa agregar al repository el nuevo metodo
         return repository.findAll();
     }
+
+    public List<MovimientoDinero> getAllTransaction() {
+        return repository.findAll();
+    }
+
 
     public void saveTransaction(MovimientoDinero movimientoDinero, Long id_empresa, Long id_empleado) throws Exception {
         Optional<Empresa> empresa = enterpriseRepository.findById(id_empresa);

@@ -14,14 +14,21 @@
 
 <body class="bg-white dark:bg-gray-900">
 <!-- navbar-->
-<navbar th:replace="fragments/header_footer::navbar">
+
+<navbar th:replace="fragments/header_footer::navbar_empleados">
     viene desde otro archivo
 </navbar>
+
+
 <!-- container general del contenido-->
 <div class="px-6 dark:bg-gray-700 dark:text-gray-400 h-screen">
 
     <!-- TITULO GRANDE-->
+
+
     <div th:replace="fragments/header_footer::titulo_app"> viene desde otro archivo</div>
+
+
     <!-- BOTON DE NUEVO--   solo disponible si es administrador -->
 
     <button sec:authorize="hasRole('ROLE_ADMIN')" data-modal-toggle="new-user-modal"
@@ -88,8 +95,14 @@
                         <a th:href="@{users/{id}(id=${empleado.id})}" type="button"
                            class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Editar</a>
                         <div class="px-4"></div>
+                        <form method="post" th:action="@{users/{id}/delete (id=${empleado.id})}">
+                            <button  type="submit"
+                                     class="font-medium text-red-600 dark:text-red-500 hover:underline">Remover</button>
+                        </form>
+                        <!--
                         <a th:href="@{users/{id}/delete (id=${empleado.id})}" type="button"
                            class="font-medium text-red-600 dark:text-red-500 hover:underline">Remover</a>
+                           -->
                     </div>
 
                 </td>

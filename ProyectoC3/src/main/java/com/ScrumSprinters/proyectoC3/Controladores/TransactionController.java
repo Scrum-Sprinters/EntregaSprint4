@@ -2,6 +2,7 @@ package com.ScrumSprinters.proyectoC3.Controladores;
 
 import com.ScrumSprinters.proyectoC3.Entidades.Empleado;
 import com.ScrumSprinters.proyectoC3.Entidades.MovimientoDinero;
+import com.ScrumSprinters.proyectoC3.Servicios.EmployeeService;
 import com.ScrumSprinters.proyectoC3.Servicios.TransactionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -16,8 +17,20 @@ public class TransactionController {
     @Autowired
     TransactionService service;
 
+    @Autowired
+    EmployeeService employeeService;
+
     public TransactionController() {
     }
+
+
+
+    @GetMapping("/movements")
+    public String mostrarMovimientos(Model model){
+        model.addAttribute(service.getAllTransaction());
+        return "movements";
+    }
+
 
     @GetMapping("enterprises/{id}/movements")
     public String listaEmpresas(@PathVariable Long id, Model model) {
@@ -28,6 +41,7 @@ public class TransactionController {
         //TODO: revisar si es necesario enviar la empresa a la vista
         model.addAttribute("empresa_id", id);
         model.addAttribute("nuevoMovimiento", new MovimientoDinero());
+        //model.addAttribute("empleados", employeeService)
 
         try {
             List<MovimientoDinero> listaMovimientos = service.getAllTransaction(id);
@@ -51,7 +65,7 @@ public class TransactionController {
 
     @PostMapping("/enterprises/{id}/movements")
     public String postNewTransaction(@PathVariable Long id, @ModelAttribute("nuevoMovimiento") MovimientoDinero nuevoMovimiento) {
-        long empleado_id = 3; //TODO: eliminar este id hardcode
+        long empleado_id = 17; //TODO: eliminar este id hardcode
 
         try {
             service.saveTransaction(nuevoMovimiento, id, empleado_id);

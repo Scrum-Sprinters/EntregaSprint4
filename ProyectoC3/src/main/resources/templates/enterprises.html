@@ -14,7 +14,7 @@
 
 <body class="bg-white dark:bg-gray-800">
 <!-- navbar-->
-<navbar th:replace="fragments/header_footer::navbar">
+<navbar th:replace="fragments/header_footer::navbar_empresas">
     viene desde otro archivo
 </navbar>
 <!-- container general del contenido-->
@@ -89,11 +89,12 @@
                     <div class="flex items-center justify-between ">
                         <a th:href="@{enterprises/{id}/movements (id=${empresa.id})}" type="button"
                            class="font-medium text-blue-600 dark:text-green-500 hover:underline">Transacciones</a>
-                        <a href="#" type="button"
+                        <a th:href="@{enterprises/{id}(id=${empresa.id})}" type="button"
                            class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Editar</a>
-                        <a th:href="@{enterprises/{id}/delete (id=${empresa.id})}" type="button"
-                           class="font-medium text-red-600 dark:text-red-500 hover:underline">Remover</a>
-
+                        <form method="post" th:action="@{enterprises/{id}/delete (id=${empresa.id})}">
+                        <button  type="submit"
+                           class="font-medium text-red-600 dark:text-red-500 hover:underline">Remover</button>
+                        </form>
                     </div>
 
                 </td>
